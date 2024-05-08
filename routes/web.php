@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,24 +17,30 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('frontend.index');
+})->name('index');
+
+ Route::get('/about', [FrontendController::class, 'about'])->name('about');
+ Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+ Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
+ Route::get('/cart', [FrontendController::class, 'cart'])->name('cart');
+ Route::get('/shop-detail', [FrontendController::class, 'shop_detail'])->name('shop_detail');
+ Route::get('/404', [FrontendController::class, 'pagenotfound'])->name('pagenotfound');
+ Route::get('checkout', [FrontendController::class, 'checkout'])->name('checkout');
+
+
+
+
+
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::get('/', [FrontendController::class, 'index'])->name('index');
-Route::get('/about', [FrontendController::class, 'about'])->name('about');
-Route::get('/cart', [FrontendController::class, 'cart'])->name('cart');
-Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
-Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
-Route::get('/checkout', [FrontendController::class, 'checkout'])->name('checkout');
-Route::get('/shop_detail', [FrontendController::class, 'shop_detail'])->name('shop_detail');
-Route::get('/404', [FrontendController::class, 'pagenotfound'])->name('404');
-
-
-
-
-Route::prefix('admin')->group(function () {
-
-    Route::get('/', function () {
-        return view('backend.admin_dashboard');
-    })->name('admin_dashboard');
-});
+require __DIR__.'/auth.php';
