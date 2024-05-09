@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container  col-6 h-100 py-3">
+        @include('notify::components.notify')
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
                 <!-- Register Card -->

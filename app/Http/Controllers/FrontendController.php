@@ -36,7 +36,7 @@ class FrontendController extends Controller
     public function shop_detail()
     {
 
-        return view('frontend.shop-detail');
+        return view('frontend.shop-details');
     }
 
     public function  pagenotfound()

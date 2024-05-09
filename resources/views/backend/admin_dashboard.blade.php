@@ -3,8 +3,9 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-page">
-        <div class="layout-container">
-            
+            @include('notify::components.notify')
+            <div class="layout-container">
+
                 <div class="content-wrapper">
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">

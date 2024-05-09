@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container col-4 h-100 py-5">
+        @include('notify::components.notify')
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner py-4">
                 <!-- Forgot Password -->

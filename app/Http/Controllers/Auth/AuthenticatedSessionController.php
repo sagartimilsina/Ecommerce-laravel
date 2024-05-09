@@ -29,7 +29,21 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Auth::check()) {
+            if (Auth::user()->role === 'admin') {
+                notify()->success('Welcome Admin, You are logged in successfully');
+                return redirect()->route('admin_dashboard');
+            } elseif (Auth::user()->role === 'user') {
+                notify()->success('Welcome User, You are logged in successfully');
+                return redirect()->route('user_dashboard');
+            } else {
+                notify()->error('These credentials do not match our records');
+                return redirect()->route('login');
+            }
+        }
+        return redirect()->route('login')->with([
+            notify()->error('These credentials do not match our records'),
+        ]);
     }
 
     /**

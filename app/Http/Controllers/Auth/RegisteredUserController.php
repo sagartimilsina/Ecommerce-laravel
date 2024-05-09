@@ -46,6 +46,12 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        if ($user->role === 'admin') {
+            notify()->success('Welcome Admin, You are logged in successfully');
+            return redirect()->route('admin_dashboard');
+        } else {
+            notify()->success('Welcome User, You are logged in successfully');
+            return redirect()->route('user_dashboard');
+        }
     }
 }
