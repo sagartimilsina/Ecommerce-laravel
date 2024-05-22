@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Gallery;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Schema::defaultStringLength(191);
+        if (Schema::hasTable('galleries')) {
+            $all_images = Gallery::query()->get();
+            view()->share('all_images', $all_images);
+        }
     }
 }

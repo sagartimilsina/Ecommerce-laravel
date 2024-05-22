@@ -12,10 +12,16 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <li class="menu-item active">
-            <a href="index.html" class="menu-link">
+        <li class="menu-item {{request()->routeIs('admin_dashboard') ? 'active' : ''}}">
+            <a href="{{route('admin_dashboard')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
+            </a>
+        </li>
+        <li class="menu-item {{request()->routeIs('products*') ? 'active' : ''}}">
+            <a href="{{route('products.index')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Manage Products</div>
             </a>
         </li>
         <li class="menu-item">

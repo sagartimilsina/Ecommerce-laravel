@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\users;
 use Illuminate\Http\Request;
 
@@ -18,16 +19,16 @@ class UsersController extends Controller
     public function edit_profile()
     {
 
-        $user = users::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
         return view('frontend.profile.edit_profile', compact('user'));
     }
     public function address_update(){
-        $user = users::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
         return view('frontend.profile.address', compact('user'));
     }
 
     public function account_details(){
-        $user = users::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
         return view('frontend.profile.settings', compact('user'));
     }
     public function user_orders_details(){

@@ -1,8 +1,14 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CancellationsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +44,13 @@ Route::prefix('admin')->middleware(['admin', 'auth', 'verified'])->group(functio
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('/products', ProductController::class);
+    Route::resource('/users', UsersController::class);
+    Route::resource('/orders', OrdersController::class);
+    Route::resource('/cancellations', CancellationsController::class);
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/payments', PaymentsController::class);
+    Route::resource('/role', RoleController::class);
 });
 
 // Admin Routes Ends //

@@ -1,4 +1,7 @@
      <!-- Footer -->
+     <div class="notify">
+         @include('notify::components.notify')
+     </div>
      <footer class="content-footer footer bg-footer-theme">
          <div class="container-xxl d-flex flex-wrap justify-content-center py-2 flex-md-row flex-column">
              <div class="mb-2 mb-md-0">
@@ -50,10 +53,16 @@
 
      <!-- Place this tag in your head or just before your close body tag. -->
      <script async defer src="https://buttons.github.io/buttons.js"></script>
-     <div class="notify">
-        @include('notify::components.notify')
-     </div>
-    
+
+     <script>
+         CKEDITOR.plugins.addExternal('youtube', '/backend/ckeditor/plugins/youtube/', 'plugin.js');
+         CKEDITOR.replace('editor', {
+             filebrowserUploadUrl: "",
+             filebrowserUploadMethod: 'form',
+             extraPlugins: 'youtube'
+         });
+     </script>
+
      </body>
 
      </html>

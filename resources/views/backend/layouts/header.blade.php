@@ -22,6 +22,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/ae6df88903.js" crossorigin="anonymous"></script>
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="/backend/assets/vendor/fonts/boxicons.css" />
@@ -42,10 +43,11 @@
     <script src="/backend/assets/vendor/js/helpers.js"></script>
 
     <script src="/backend/assets/js/config.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     @notifyCss
     <style>
-        .notify{
-            z-index: 10!important;
+        .notify {
+            z-index: 10 !important;
         }
     </style>
 </head>
