@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
             <div class="navbar-nav mx-auto ">
                 <a href="{{ route('index') }}" class="nav-item nav-link active fs-5">Home</a>
-                <a href="{{ route('about') }}" class="nav-item nav-link fs-5 ">About</a>
+                {{-- <a href="{{ route('about') }}" class="nav-item nav-link fs-5 ">About</a> --}}
                 <a href="{{ route('shop') }}" class="nav-item nav-link fs-5">Shop</a>
                 <a href="{{ route('contact') }}" class="nav-item nav-link fs-5">Contact</a>
 
@@ -30,18 +30,26 @@
                         style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                 </a>
 
+                @auth
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link " data-bs-toggle="dropdown"> <i class="fas fa-user fa-2x"></i></a>
 
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link " data-bs-toggle="dropdown"> <i class="fas fa-user fa-2x"></i></a>
+                        <div class="dropdown-menu m-0  bg-secondary rounded-0">
+                            <a class="dropdown-item" href="{{ route('user_dashboard') }}">My Profile</a>
+                          
 
-                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                        <a class="dropdown-item" href="#">My Profile</a>
-                        <a class="dropdown-item" href="#">Logout</a>
-
-
+                            <a class="dropdown-item" href="{{ route('user_orders_lists') }}">My Order</a>
+                            <form action="{{ route('logout') }}" method="POST">@csrf <input type="submit"
+                                    class="dropdown-item" value="Logout"></form>
+                            {{-- <a class="dropdown-item" href="{{route('logout')}}">Logout</a> --}}
+                        </div>
                     </div>
-                </div>
-                <a href="{{ route('login') }}" class="btn  border  border-secondary p-0 px-3 pt-2 text-primary">Login</a>
+                @endauth
+
+                @guest
+                    <a href="{{ route('login') }}"
+                        class="btn  border  border-secondary p-0 px-3 p-2 text-primary">Login</a>
+                @endguest
             </div>
         </div>
     </nav>

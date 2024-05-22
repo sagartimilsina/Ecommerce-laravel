@@ -15,13 +15,13 @@
                             <div class="mb-3">
                                 <label for="username" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="username" name="name"
-                                    placeholder="Enter your name" autofocus />
+                                    placeholder="Enter your name" autofocus  value="{{ old('name') }}"/> 
                                 <div class="text-danger p-2">{{ $errors->first('name') }}</div>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email" />
+                                    placeholder="Enter your email"  value="{{ old('email') }}"/>
                                 <div class="text-danger p-2">{{ $errors->first('email') }}</div>
                             </div>
                             <div class="mb-3 form-password-toggle">

@@ -42,6 +42,12 @@
     <script src="/backend/assets/vendor/js/helpers.js"></script>
 
     <script src="/backend/assets/js/config.js"></script>
+    @notifyCss
+    <style>
+        .notify{
+            z-index: 10!important;
+        }
+    </style>
 </head>
 
 <body>

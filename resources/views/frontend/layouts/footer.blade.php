@@ -5,7 +5,7 @@
               <div class="row g-4">
                   <div class="col-lg-6">
                       <a href="#">
-                          <h1 class="text-primary mb-0">E-site</h1>
+                          <h1 class="text-primary mb-0 fs-1">E-site</h1>
                       </a>
                   </div>
                   <div class="col-lg-6">
@@ -23,7 +23,7 @@
               </div>
           </div>
           <div class="row g-5">
-              <div class="col-lg-3 col-md-6">
+              <div class="col-lg-4 col-md-6">
                   <div class="footer-item">
                       <h4 class="text-light mb-3">Why People Like us!</h4>
                       <p class="mb-4">typesetting, remaining essentially unchanged. It was
@@ -31,27 +31,16 @@
                       {{-- <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a> --}}
                   </div>
               </div>
-              <div class="col-lg-3 col-md-6">
-                  <div class="d-flex flex-column text-start footer-item">
-                      <h4 class="text-light mb-3">Shop Info</h4>
-                      <a class="btn-link" href="">About Us</a>
-                      <a class="btn-link" href="">Contact Us</a>
-                      <a class="btn-link" href="">Privacy Policy</a>
-                      <a class="btn-link" href="">Terms & Condition</a>
-                      <a class="btn-link" href="">Return Policy</a>
-                      <a class="btn-link" href="">FAQs & Help</a>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
+              
+              <div class="col-lg-4 col-md-6">
                   <div class="d-flex flex-column text-start footer-item">
                       <h4 class="text-light mb-3">Account</h4>
-                      <a class="btn-link" href="">My Account</a>
+                      <a class="btn-link" href="{{ route('user_profile.edit') }}">My Account</a>
                       <a class="btn-link" href="{{ route('cart') }}">Shopping Cart</a>
-                      <a class="btn-link" href="">Wishlist</a>
-                      <a class="btn-link" href="">Order History</a>
+                      <a class="btn-link" href="{{ route('user_orders_lists') }}">Order History</a>
                   </div>
               </div>
-              <div class="col-lg-3 col-md-6">
+              <div class="col-lg-4 col-md-6">
                   <div class="footer-item">
                       <h4 class="text-light mb-3">Contact</h4>
                       <p>Address: Pokhara -18</p>

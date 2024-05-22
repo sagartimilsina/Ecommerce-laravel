@@ -3,7 +3,7 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-page">
-            @include('notify::components.notify')
+          
             <div class="layout-container">
 
                 <div class="content-wrapper">
@@ -16,7 +16,7 @@
                                         <div class="col-sm-12">
                                             <div class="card-body">
                                                 <h5 class="card-title text-primary">
-                                                    Congratulations John! 🎉
+                                                    Congratulations Sagar Timilsina! 🎉
                                                 </h5>
                                                 <p class="mb-4">
                                                     You have done
