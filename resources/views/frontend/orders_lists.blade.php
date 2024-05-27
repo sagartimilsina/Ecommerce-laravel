@@ -85,9 +85,9 @@
                                             <td>{{ $order->product->product_price * $order->order->quantity }}</td>
                                         @endif
                                         <td>
-                                            @if (@$order->order->order_status == 'Delivered')
-                                                <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>
-                                            @elseif(@$order->order->order_status == 'Cancelled')
+                                            @if (@$order->order->order_status == 'delivered')
+                                                <p class="badge bg-success p-3">{{ $order->order->order_status }}</p>
+                                            @elseif(@$order->order->order_status == 'cancelled')
                                                 <p class="badge bg-danger p-3">{{ $order->order->order_status }}</p>
                                             @else
                                                 <p class="badge bg-warning p-3">{{ $order->order->order_status }}</p>
@@ -208,9 +208,9 @@
                                             <td>{{ $order->product->product_price * $order->order->quantity }}</td>
                                         @endif
                                         <td>
-                                            @if (@$order->order->order_status == 'Delivered')
-                                                <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>
-                                            @elseif(@$order->order->order_status == 'Cancelled')
+                                            @if (@$order->order->order_status == 'delivered')
+                                                <p class="badge bg-success p-3">{{ $order->order->order_status }}</p>
+                                            @elseif(@$order->order->order_status == 'cancelled')
                                                 <p class="badge bg-danger p-3">{{ $order->order->order_status }}</p>
                                             @else
                                                 <p class="badge bg-warning p-3">{{ $order->order->order_status }}</p>

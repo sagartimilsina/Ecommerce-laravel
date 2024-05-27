@@ -36,38 +36,37 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            <h1 class="fw-bold mb-0">Related products</h1>
 
-        <h1 class="fw-bold mb-0">Related products</h1>
-
-        <div class="vesitable">
-            <div class="owl-carousel vegetable-carousel justify-content-center">
-                @foreach ($related_product as $similar_product)
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ asset($similar_product->product_image) }}" class="img-fluid w-100 rounded-top"
-                                alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                            style="top: 10px; right: 10px;">{{ $similar_product->category->category_name }}</div>
-                        <div class="p-4 pb-0 rounded-bottom">
-                            <h4>{{ $similar_product->product_name }}</h4>
-                            <p>{!! \Illuminate\Support\Str::limit($similar_product->product_description, 50) !!}</p>
-                            <p class="text-dark fs-5 fw-bold">NPR {{ $similar_product->product_price }}</p>
-                            <div class="d-flex justify-content-center flex-lg-wrap">
-                                <a href="{{ route('cart', $similar_product->id) }}"
-                                    class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i
-                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                <a href="{{ route('shop_detail', $similar_product->id) }}"
-                                    class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i
-                                        class="fa fa-eye me-2 text-primary"></i>View Details</a>
+            <div class="vesitable">
+                <div class="owl-carousel vegetable-carousel justify-content-center">
+                    @foreach ($related_product as $similar_product)
+                        <div class="border border-primary rounded position-relative vesitable-item">
+                            <div class="vesitable-img">
+                                <img src="{{ asset($similar_product->product_image) }}" class="img-fluid w-100 rounded-top"
+                                    alt="">
+                            </div>
+                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                                style="top: 10px; right: 10px;">{{ $similar_product->category->category_name }}</div>
+                            <div class="p-4 pb-0 rounded-bottom">
+                                <h4>{{ $similar_product->product_name }}</h4>
+                                <p>{!! \Illuminate\Support\Str::limit($similar_product->product_description, 50) !!}</p>
+                                <p class="text-dark fs-5 fw-bold">NPR {{ $similar_product->product_price }}</p>
+                                <div class="d-flex justify-content-center flex-lg-wrap">
+                                    <a href="{{ route('cart', $similar_product->id) }}"
+                                        class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i
+                                            class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                    <a href="{{ route('shop_detail', $similar_product->id) }}"
+                                        class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i
+                                            class="fa fa-eye me-2 text-primary"></i>View Details</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
-    </div>
-    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
-    <!-- Single Product End -->
-@endsection
+        <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+        <!-- Single Product End -->
+    @endsection

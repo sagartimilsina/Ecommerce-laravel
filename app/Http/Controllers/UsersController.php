@@ -91,6 +91,7 @@ class UsersController extends Controller
     public function user_orders_lists()
     {
         $allOrders = Payments::with('user', 'product', 'order')->where('user_id', auth()->user()->id)->Paginate(10);
+        
 
         $paidOrders = Payments::with('order', 'product')->where('user_id', auth()->user()->id)->where('payment_status', 'Verified')->paginate(10);
         $unpaidOrders = Payments::with('order', 'product')->where('user_id', auth()->user()->id)->where('payment_status', 'Failed')->paginate(10);
