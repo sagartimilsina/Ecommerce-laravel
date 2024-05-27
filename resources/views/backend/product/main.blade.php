@@ -66,7 +66,7 @@
 
                                                                             <td>{{ $product->product_name }}</td>
                                                                             <td>{{ $product->category->category_name }}</td>
-                                                                            <td>{{ $product->product_price }}</td>
+                                                                           
                                                                             @if (@$product->product_image)
                                                                                 <td>
                                                                                     <img height="70px" width="70px"
@@ -76,6 +76,7 @@
                                                                             @else
                                                                                 <td>Images not available</td>
                                                                             @endif
+                                                                            <td>{{ $product->product_price }}</td>
                                                                             <td>{{ $product->product_quantity }}</td>
                                                                             {{-- <td>{{ $product->product_status }}</td> --}}
                                                                             <td class="text-center">

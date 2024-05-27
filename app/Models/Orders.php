@@ -22,13 +22,15 @@ class Orders extends Model
         return $this->belongsTo(User::class);
     }
 
+   
     public function payment()
     {
-        return $this->hasOne(Payments::class);
+        return $this->hasOne(Payments::class, 'order_id'); // Ensure the foreign key is correctly referenced
     }
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
+    
 }

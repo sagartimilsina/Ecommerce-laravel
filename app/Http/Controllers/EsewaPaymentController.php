@@ -122,6 +122,7 @@ class EsewaPaymentController extends Controller
                 $items = Payments::with('user', 'product')
                     ->where('transaction_code', $transaction_code)
                     ->get();
+
                 notify()->success('Payment Successful, Order Placed Successfully!');
                 return view('frontend.esewa.success', compact('items'));
             } elseif ($payments->count() > 0) {

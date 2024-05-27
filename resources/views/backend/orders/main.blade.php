@@ -23,22 +23,26 @@
                             </div>
 
                             <div class="card mt-4">
-                                <h3 class="card-title fs-4 m-3 mb-2">Pending Orders</h3>
+                                <h3 class="card-title fs-4 m-3 mb-1 text-primary">Pending Orders</h3>
+                                <a href="{{ route('pending_order') }}" class=" "><button
+                                        class="btn btn-primary m-3 mb-1">Back</button></a>
                                 <div class="card-body">
-                                  
-                                       
-                                
+
+
+
                                     <table class="table table-striped table-bordered dt-responsive nowrap"
                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>SN</th>
+                                                <th>Date</th>
                                                 <th>Name</th>
                                                 <th>Quantity</th>
-                                                <th>Price</th>
                                                 <th>Phone</th>
                                                 <th>Address</th>
-                                                <th>Total</th>
+                                                <th>Total Amount</th>
+                                                <th>Order Status</th>
+                                                <th>Payment Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -46,12 +50,34 @@
                                             @foreach ($pending_orders as $order)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $order->product->name }}</td>
-                                                    <td>{{ $order->numbers }}</td>
-                                                    <td>{{ $order->price_per_item }}</td>
-                                                    <td>{{ $order->phone }}</td>
-                                                    <td>{{ $order->address }}</td>
-                                                    <td>{{ $order->price_per_item * $order->numbers }}</td>
+                                                    <td>{{ $order->date }}</td>
+                                                    <td>{{ $order->product->product_name }}</td>
+                                                    <td>{{ $order->quantity }}</td>
+
+                                                    <td>{{ $order->user->phone }}</td>
+                                                    <td>{{ $order->user->delivery->address }}</td>
+                                                    <td>NPR {{ $order->payment->payment_amount }}</td>
+                                                    <td>
+                                                        @if($order->order_status == 'Delivered')
+                                                            <span
+                                                                class="badge bg-success">{{ $order->order_status }}</span>
+                                                        @elseif ($order->order_status == 'Cancelled')
+                                                            <span
+                                                                class="badge bg-danger">{{ $order->order_status }}</span>
+                                                        @else
+                                                            <span
+                                                                class="badge bg-warning">{{ $order->order_status }}</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if (@$order->payment->payment_status == 'Verified')
+                                                            <span
+                                                                class="badge bg-success">{{ $order->payment->payment_status }}</span>
+                                                        @else
+                                                            <span
+                                                                class="badge bg-danger">{{ $order->payment->payment_status }}</span>
+                                                        @endif
+                                                    </td>
                                                     <td class="text-center">
                                                         <a href="#" class="btn-sm btn btn-primary mx-1"
                                                             data-bs-toggle="modal"
@@ -59,42 +85,48 @@
                                                             <i class="fa fa-edit px-1"></i>Edit
                                                         </a>
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="sociallinkModalEdit_{{ $order->id }}"
-                                                            tabindex="-1" sociallink="dialog"
+                                                        <div class="modal fade"
+                                                            id="sociallinkModalEdit_{{ $order->id }}" tabindex="-1"
+                                                            sociallink="dialog"
                                                             aria-labelledby="sociallinkModalLabel_{{ $order->id }}"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog  modal-dialog-centered">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title" id="staticBackdropLabel">
-                                                                            Change the Status
+                                                                            Change the Order Status
                                                                         </h5>
                                                                         <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
+                                                                            data-bs-dismiss="modal"> <i
+                                                                                class="fa fa-times fs-5 text-danger"
+                                                                                aria-hidden="true "></i></button>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <form
-                                                                            action="{{ route('order.update', $order->id) }}"
+                                                                            action="{{ route('orders_status.update', $order->id) }}"
                                                                             method="post">
                                                                             @csrf
                                                                             @method('put')
                                                                             <div class="input-group mb-3">
-                                                                                <select class="form-select" name="status"
+                                                                                <select class="form-select"
+                                                                                    name="order_status"
                                                                                     id="inputGroupSelect02">
-                                                                                    <option value="Ready for delivery"
-                                                                                        {{ $order->status == 'ready_for_delivery' ? 'selected' : '' }}>
-                                                                                        Ready for delivery</option>
+                                                                                    <option value="pending" selected
+                                                                                        disabled>Select
+                                                                                        one</option>
                                                                                     <option value="Delivered"
-                                                                                        {{ $order->status == 'delivered' ? 'selected' : '' }}>
+                                                                                        {{ $order->order_status == 'Delivered' ? 'selected' : '' }}>
                                                                                         Delivered</option>
+                                                                                    <option value="Cancelled"
+                                                                                        {{ $order->order_status == 'Cancelled' ? 'selected' : '' }}>
+                                                                                        Cancelled</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submit"
-                                                                                    class="btn btn-secondary">Submit</button>
+                                                                                    class="btn btn-info bg-info">Submit</button>
                                                                                 <button type="button"
-                                                                                    class="btn btn-secondary"
+                                                                                    class="btn btn-danger bg-danger"
                                                                                     data-bs-dismiss="modal">Close</button>
                                                                             </div>
                                                                         </form>

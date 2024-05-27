@@ -4,30 +4,115 @@ namespace App\Http\Controllers;
 
 use App\Models\DeliveryAddress;
 use App\Models\Orders;
+use App\Models\Payments;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
-
-
     public function pending_order()
     {
-        $pending_orders = Orders::where('order_status', 'Pending')->get();
-        return view('backend.orders.main', compact('pending_orders'));
+
+        $user_ids = User::where('role', 'user')->pluck('id');
+
+
+        $all_pending_orders = new Collection();
+
+
+        foreach ($user_ids as $id) {
+            $pending_order = Orders::with('user')
+                ->where('user_id', $id)
+                ->where('order_status', 'pending')
+                ->first();
+            if ($pending_order) {
+                $all_pending_orders->push($pending_order);
+            }
+        }
+        return view('backend.orders.user_order_pending', ['pending_orders' => $all_pending_orders]);
     }
+
+    public function show_all_users_pending_orders($id)
+    {
+
+
+        $pending_order = Orders::with('user')
+            ->where('user_id', $id)
+            ->where('order_status', 'pending')
+            ->paginate(20);
+        return view('backend.orders.main', ['pending_orders' => $pending_order]);
+    }
+
+    public function update_order_status(Request $request, $id)
+    {
+        $order = Orders::find($id);
+        $order->order_status = $request->order_status;
+        $order->save();
+        notify()->success('Order Status Updated Successfully');
+        return redirect()->back();
+    }
+
+
 
     public function delivered_order()
     {
-        $delivered_orders = Orders::where('order_status', 'Delivered')->get();
-        return view('orders.delivered', compact('delivered_orders'));
+        $user_ids = User::where('role', 'user')->pluck('id');
+
+
+        $all_delivery_orders = new Collection();
+
+
+        foreach ($user_ids as $id) {
+            $delivered_orders = Orders::with('user')
+                ->where('user_id', $id)
+                ->where('order_status', 'delivered')
+                ->first();
+            if ($delivered_orders) {
+                $all_delivery_orders->push($delivered_orders);
+            }
+        }
+        return view('backend.orders.user_order_delivered', ['delivered_orders' => $all_delivery_orders]);
+    }
+    public function show_all_users_delivered_orders($id)
+    {
+        $delivered_orders = Orders::with('user')
+            ->where('user_id', $id)
+            ->where('order_status', 'delivered')
+            ->paginate(20);
+
+        return view('backend.orders.delivered', compact('delivered_orders'));
+    }
+
+    public function show_all_users_cancelled_orders($id)
+    {
+        $cancelled_orders = Orders::with('user')
+            ->where('user_id', $id)
+            ->where('order_status', 'cancelled')
+            ->paginate(20);
+
+        return view('backend.orders.cancel', compact('cancelled_orders'));
     }
 
     public function cancel_order()
     {
-        $cancelled_orders = Orders::where('order_status', 'Cancelled')->get();
-        return view('orders.cancelled', compact('cancelled_orders'));
-    }
 
+        $user_ids = User::where('role', 'user')->pluck('id');
+
+
+        $all_cancelled_orders = new Collection();
+
+
+        foreach ($user_ids as $id) {
+            $cancelled_orders = Orders::with('user')
+                ->where('user_id', $id)
+                ->where('order_status', 'cancelled')
+                ->first();
+            if ($cancelled_orders) {
+                $all_cancelled_orders->push($cancelled_orders);
+            }
+        }
+        return view('backend.orders.user_order_cancelled', ['cancelled_orders' => $all_cancelled_orders]);
+    }
     public function user_orders_store(Request $request)
     {
         return $request;
@@ -60,6 +145,10 @@ class OrdersController extends Controller
     public function index()
     {
         $orders = Orders::all();
+        $user = User::pluck('id');
+        $users = Orders::where('user_id', $user)->get();
+        return $users;
+        return view('backend.orders.index', compact('orders', 'users'));
     }
 
     /**

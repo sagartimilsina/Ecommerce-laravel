@@ -50,12 +50,17 @@ Route::prefix('admin')->middleware(['admin', 'auth', 'verified'])->group(functio
     Route::resource('/products', ProductController::class);
     Route::resource('/users', UsersController::class);
     Route::resource('/orders', OrdersController::class);
+    Route::put('/update_orders_status/{id}',  [OrdersController::class, 'update_order_status'])->name('orders_status.update');
+    Route::get('/all_users_pending_orders/{id}',[OrdersController::class, 'show_all_users_pending_orders'])->name('show_all_users_pending_orders');
+    Route::get('/all_users_delivered_orders/{id}',[OrdersController::class, 'show_all_users_delivered_orders'])->name('show_all_users_delivered_orders');
+    Route::get('/all_users_cancelled_orders/{id}',[OrdersController::class, 'show_all_users_cancelled_orders'])->name('show_all_users_cancelled_orders');
     Route::get('/pending-order', [OrdersController::class, 'pending_order'])->name('pending_order');
     Route::get('/delivered-order', [OrdersController::class, 'delivered_order'])->name('delivered_order');
-    Route::get('/cancel-order', [OrdersController::class, 'cancel-order'])->name('cancel_order');
+    Route::get('/cancel-order', [OrdersController::class, 'cancel_order'])->name('cancel_order');
     Route::resource('/cancellations', CancellationsController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/payments', PaymentsController::class);
+
 });
 
 // Admin Routes Ends //
