@@ -44,9 +44,11 @@
                                                         <div class="card mb-4">
                                                             <div class="card-body">
                                                                 <form action="{{ route('products.update', $product->id) }}"
-                                                                    method="POST">
+                                                                    method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     @method('put')
+                                                                    <input type="hidden" name="product_image_old"
+                                                                        value="{{ $product->product_image }}">
                                                                     <div class="row mb-2">
                                                                         <div class="col-lg-6 col-sm-6 col-md-6 col-12">
                                                                             <label for=""
@@ -169,7 +171,7 @@
                                                                     <div class="">
                                                                         <button type="submit"
                                                                             class="btn btn-md btn-primary bg-primary"
-                                                                            name="submit">Update</button>
+                                                                            >Update</button>
                                                                     </div>
                                                                 </form>
 

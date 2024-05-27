@@ -83,270 +83,35 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="row g-4 justify-content-center">
+                                @foreach ($products as $items)
                                 <div class="col-md-6 col-lg-6 col-xl-4">
                                     <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
+                                            <img src="{{asset($items->product_image)}}" class="img-fluid w-100 rounded-top"
                                                 alt="">
                                         </div>
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
+                                            style="top: 10px; left: 10px;">{{$items->category->category_name}}</div>
                                         <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                             <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
+                                                <h4>{{$items->product_name}}</h4>
+                                                <p class="text-dark fs-5 fw-bold mb-0">NPR {{$items->product_price}}</p>
                                             </div>
 
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
+                                            <p>{!! $items->product_description !!}</p>
                                             <div class="d-block text-center">
 
-                                                <a href="{{ route('cart') }}"
+                                                <a href="{{ route('cart',$items->id ) }}"
                                                     class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
                                                         class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
+                                                <a href="{{ route('shop_detail',$items->id) }}"
                                                     class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
                                                         class="fa fa-eye me-2 text-primary"></i>View Shop</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                alt="">
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                            style="top: 10px; left: 10px;">Fruits</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <div class="d-flex justify-content-between">
-                                                <h4>Grapes</h4>
-                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            </div>
-
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                incididunt</p>
-                                            <div class="d-block text-center">
-
-                                                <a href="{{ route('cart') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                                                <a href="{{ route('shop_detail') }}"
-                                                    class="btn border border-secondary rounded px-3 mb-3 text-primary"><i
-                                                        class="fa fa-eye me-2 text-primary"></i>View Shop</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

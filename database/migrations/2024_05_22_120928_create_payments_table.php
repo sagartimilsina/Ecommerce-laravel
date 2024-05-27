@@ -20,9 +20,14 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->string('payment_method');
+            $table->string('transaction_code')->nullable();
             $table->string('payment_status')->default('pending');
             $table->string('payment_amount');
             $table->string('payment_date');
+            $table->string('product_code')->nullable();
+            $table->string('status')->nullable();
+            $table->string('signature')->nullable();
+            $table->string('transaction_uuid')->nullable();
             $table->string('payment_proof')->nullable();
             $table->timestamps();
         });

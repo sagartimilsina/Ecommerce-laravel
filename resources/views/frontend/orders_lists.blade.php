@@ -28,29 +28,29 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                        type="button" role="tab" aria-controls="home" aria-selected="true">
+                    <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-orders"
+                        type="button" role="tab" aria-controls="all-orders" aria-selected="true">
                         All
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                        role="tab" aria-controls="profile" aria-selected="false">
+                    <button class="nav-link" id="to-pay-tab" data-bs-toggle="tab" data-bs-target="#to-pay" type="button"
+                        role="tab" aria-controls="to-pay" aria-selected="false">
                         To Pay
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
-                        type="button" role="tab" aria-controls="messages" aria-selected="false">
-                        To Recieve
+                    <button class="nav-link" id="paid-tab" data-bs-toggle="tab" data-bs-target="#paid" type="button"
+                        role="tab" aria-controls="paid" aria-selected="false">
+                        Paid
                     </button>
                 </li>
             </ul>
 
             <!-- Tab panes -->
+
             <div class="tab-content">
-                <div class="tab-pane active mt-2" id="home" role="tabpanel" aria-labelledby="home-tab">
-
+                <div class="tab-pane fade show active" id="all-orders" role="tabpanel" aria-labelledby="all-tab">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-borderless table-primary align-middle">
                             <thead class="table-dark">
@@ -59,28 +59,52 @@
                                     <th>SN</th>
                                     <th>Order No</th>
                                     <th>Date</th>
-                                    <th>Items</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
+                                    <th>Items Image</th>
+                                    <th>Total Amount</th>
+                                    <th>Order Status</th>
+                                    <th>Payment Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr class="table-primary">
-                                    <td scope="row">1</td>
-                                    <td>46465</td>
-                                    <td>2024/5/22</td>
-                                    <td><img src="img/vegetable-item-1.jpg" alt="" width="50" height="50">
-                                    </td>
-                                    <td>1000</td>
-                                    <td class="text-success">Delivered/Pending</td>
-                                    <td><a href="{{ route('user_orders_details') }}" class="btn btn-primary">Manage</a></td>
-                                </tr>
+                                @foreach ($allOrders as $order)
+                                    <tr class="table-primary">
+                                        <td scope="row">{{ $loop->iteration }}</td>
+                                        <td>{{ $order->order->id }}</td>
+                                        <td>{{ $order->order->date }}</td>
+                                        <td><img src="{{ asset($order->product->product_image) }}" alt=""
+                                                width="50" height="50">
+                                        </td>
+                                        <td>{{ $order->product->product_price }}</td>
+                                        <td>
+                                            @if (@$order->order->order_status == 'Delivered')
+                                                <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>
+                                            @elseif(@$order->order->order_status == 'Cancelled')
+                                                <p class="badge bg-danger p-3">{{ $order->order->order_status }}</p>
+                                            @else
+                                                <p class="badge bg-warning p-3">{{ $order->order->order_status }}</p>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (@$order->payment_status == 'Verified')
+                                                <p class="badge bg-info p-3">{{ $order->payment_status }}</p>
+                                            @elseif(@$order->payment_status == 'Failed')
+                                                <p class="badge bg-danger p-3">{{ $order->payment_status }}</p>
+                                            @else
+                                            @endif
+                                        </td>
+                                        <td><a href="{{ route('user_orders_details', $order->order_id) }}"
+                                                class="btn btn-primary">View</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
+                        {{ $allOrders->links() }}
                     </div>
                 </div>
-                <div class="tab-pane mt-2" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" id="to-pay" role="tabpanel" aria-labelledby="to-pay-tab">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-borderless table-primary align-middle">
                             <thead class="table-dark">
@@ -90,27 +114,50 @@
                                     <th>Order No</th>
                                     <th>Date</th>
                                     <th>Items</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
+                                    <th>Total Amount</th>
+                                    <th>Order Status</th>
+                                    <th>Payment Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr class="table-primary">
-                                    <td scope="row">1</td>
-                                    <td>46465</td>
-                                    <td>2024/5/22</td>
-                                    <td><img src="img/vegetable-item-1.jpg" alt="" width="50" height="50">
-                                    </td>
-                                    <td>1000</td>
-                                    <td class="text-danger">Payment Pending</td>
-                                    <td><a href="{{ route('user_orders_details') }}" class="btn btn-primary">Manage</a></td>
-                                </tr>
+                                @foreach ($unpaidOrders as $order)
+                                    <tr class="table-primary">
+                                        <td scope="row">{{ $loop->iteration }}</td>
+                                        <td>{{ $order->id }}</td>
+                                        <td>{{ $order->order->date }}</td>
+                                        <td><img src="{{ asset($order->product->product_image) }}" alt=""
+                                                width="50" height="50">
+                                        </td>
+                                        <td>{{ $order->product->product_price }}</td>
+                                        <td>
+                                            @if (@$order->order->order_status == 'Delivered')
+                                                <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>
+                                            @elseif(@$order->order->order_status == 'Cancelled')
+                                                <p class="badge bg-danger p-3">{{ $order->order->order_status }}</p>
+                                            @else
+                                                <p class="badge bg-warning p-3">{{ $order->order->order_status }}</p>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (@$order->payment_status == 'Verified')
+                                                <p class="badge bg-info p-3">{{ $order->payment_status }}</p>
+                                            @elseif(@$order->payment_status == 'Failed')
+                                                <p class="badge bg-danger p-3">{{ $order->payment_status }}</p>
+                                            @else
+                                            @endif
+                                        </td>
+                                        <td><a href="{{ route('user_orders_details', $order->order_id) }}"
+                                                class="btn btn-primary">Manage</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                        {{ $unpaidOrders->links() }}
                     </div>
                 </div>
-                <div class="tab-pane mt-2" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="paid-tab">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-borderless table-primary align-middle">
                             <thead class="table-dark">
@@ -120,30 +167,51 @@
                                     <th>Order No</th>
                                     <th>Date</th>
                                     <th>Items</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
+                                    <th>Total Amount</th>
+                                    <th>Order Status</th>
+                                    <th>Payment Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr class="table-primary">
-                                    <td scope="row">1</td>
-                                    <td>46465</td>
-                                    <td>2024/5/22</td>
-                                    <td><img src="img/vegetable-item-1.jpg" alt="" width="50" height="50">
-                                    </td>
-                                    <td>1000</td>
-                                    <td class="text-success">Delivered</td>
-                                    <td><a href="{{ route('user_orders_details') }}" class="btn btn-primary">Manage</a></td>
-                                </tr>
+                                @foreach ($paidOrders as $order)
+                                    <tr class="table-primary">
+                                        <td scope="row">{{ $loop->iteration }}</td>
+                                        <td>{{ $order->id }}</td>
+                                        <td>{{ $order->order->date }}</td>
+                                        <td><img src="{{ asset($order->product->product_image) }}" alt=""
+                                                width="50" height="50">
+                                        </td>
+                                        <td>{{ $order->product->product_price }}</td>
+                                        <td>
+                                            @if (@$order->order->order_status == 'Delivered')
+                                                <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>
+                                            @elseif(@$order->order->order_status == 'Cancelled')
+                                                <p class="badge bg-danger p-3">{{ $order->order->order_status }}</p>
+                                            @else
+                                                <p class="badge bg-warning p-3">{{ $order->order->order_status }}</p>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (@$order->payment_status == 'Verified')
+                                                <p class="badge bg-info p-3">{{ $order->payment_status }}</p>
+                                            @elseif(@$order->payment_status == 'Failed')
+                                                <p class="badge bg-danger p-3">{{ $order->payment_status }}</p>
+                                            @else
+                                            @endif
+                                        </td>
+                                        <td><a href="{{ route('user_orders_details', $order->order_id) }}"
+                                                class="btn btn-primary">Manage</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                        {{ $paidOrders->links() }}
                     </div>
+
                 </div>
             </div>
-
-
-
 
         </div>
 

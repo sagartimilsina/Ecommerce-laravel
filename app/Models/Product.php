@@ -25,6 +25,21 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function order()
+    {
+        return $this->hasMany(Orders::class);
+    }
+
+    public function payment(){
+
+        return $this->hasOne(Payments::class);
+    }
     
    
 }

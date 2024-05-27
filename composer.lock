@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7a1cbe87395ed6d7813f3d116ac58d3",
+    "content-hash": "1bbace945a5972ad49d8b53a692f335a",
     "packages": [
         {
             "name": "brick/math",
@@ -5846,6 +5846,42 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "xentixar/esewa-sdk",
+            "version": "v1.0.01",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xentixar/esewa-sdk.git",
+                "reference": "99c330e3d2d3cc77c8f214239d4136db914b218e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xentixar/esewa-sdk/zipball/99c330e3d2d3cc77c8f214239d4136db914b218e",
+                "reference": "99c330e3d2d3cc77c8f214239d4136db914b218e",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Xentixar\\EsewaSdk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "xentixar",
+                    "email": "xentixar@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/xentixar/esewa-sdk/issues",
+                "source": "https://github.com/xentixar/esewa-sdk/tree/v1.0.01"
+            },
+            "time": "2023-12-25T13:30:14+00:00"
         }
     ],
     "packages-dev": [

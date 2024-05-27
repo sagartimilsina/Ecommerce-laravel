@@ -12,7 +12,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::paginate(20);
+        return view('backend.category.main', compact('categories'));
     }
 
     /**
@@ -28,7 +29,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'category_name' => 'required|max:255',
+            'category_description' => 'nullable|string',
+        ]);
+        try {
+            Category::create($request->all());
+            notify()->success('Category created successfully!');
+            return back();
+        } catch (\Exception $e) {
+            notify()->error($e->getMessage());
+            return back()->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
@@ -44,7 +57,6 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
     }
 
     /**
@@ -52,7 +64,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+
+        $request->validate([
+            'category_name' => 'required|max:255',
+            'category_description' => 'nullable|string',
+        ]);
+        try {
+            $category->update($request->all());
+            notify()->success('Category updated successfully!');
+            return back();
+        } catch (\Exception $e) {
+            notify()->error($e->getMessage());
+            return back()->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
@@ -60,6 +84,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+
+        try {
+            $category->delete();
+            notify()->success('Category deleted successfully!');
+            return back();
+        } catch (\Exception $e) {
+            notify()->error($e->getMessage());
+            return back()->withErrors($e->getMessage())->withInput();
+        }
     }
 }

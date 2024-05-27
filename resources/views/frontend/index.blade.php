@@ -49,534 +49,116 @@
                         <ul class="nav nav-pills d-inline-flex text-center mb-5">
                             <li class="nav-item">
                                 <a class="d-flex m-2 py-2 bg-light rounded active" data-bs-toggle="pill" href="#tab-1">
-                                    <span class="text-dark w-100 px-3 pt-1 pb-1  text-nowrap ">All Products</span>
+                                    <span class="text-dark w-100 px-3 pt-1 pb-1 text-nowrap">All Products</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="d-flex py-2 m-2 bg-light rounded" data-bs-toggle="pill" href="#tab-2">
-                                    <span class="text-dark w-100 px-3 pt-1 pb-1  text-nowrap">Electronic Accessories</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded" data-bs-toggle="pill" href="#tab-3">
-                                    <span class="text-dark w-100 px-3 pt-1 pb-1  text-nowrap">Groceries</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded" data-bs-toggle="pill" href="#tab-4">
-                                    <span class="text-dark w-100 px-3 pt-1 pb-1  text-nowrap">Men Fashion</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded" data-bs-toggle="pill" href="#tab-5">
-                                    <span class="text-dark w-100 px-3 pt-1 pb-1  text-nowrap">Women Fashion</span>
-                                </a>
-                            </li>
+                            @foreach ($categories as $category)
+                                <li class="nav-item">
+                                    <a class="d-flex py-2 m-2 bg-light rounded" data-bs-toggle="pill"
+                                        href="#tab-{{ $category->id }}">
+                                        <span
+                                            class="text-dark w-100 px-3 pt-1 pb-1 text-nowrap">{{ $category->category_name }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
-                </div>
-                <div class="tab-content">
-                    <div id="tab-1" class="tab-pane fade show p-0 active">
-                        <div class="row g-4">
-                            <div class="col-lg-12">
-                                <div class="row g-4">
+
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                            <div class="row g-4">
+                                @foreach ($products as $product)
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item">
                                             <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
+                                                <img src="{{ asset($product->product_image) }}"
+                                                    class="img-fluid w-100 rounded-top" alt="{{ $product->product_name }}">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
+                                                style="top: 10px; left: 10px;">{{ $product->product_name }}</div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                 <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
+                                                    <h4>{{ $product->product_name }}</h4>
+                                                    <p class="text-dark fs-5 fw-bold mb-1">${{ $product->product_price }}
+                                                    </p>
                                                 </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
+                                                <p class="">{!! Str::limit($product->product_description, 50) !!}</p>
 
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
+                                                <div class="d-block flex-lg-wrap mt-3">
+                                                    <form action="{{ route('add_to_cart', $product->id) }}" method="POST">
+                                                        @csrf
+                                                        {{-- <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"> --}}
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="quantity" value="1">
+                                                        <button type="submit"
+                                                            class="btn border border-secondary rounded px-3 text-primary mb-3">
+                                                            <i class="fa fa-shopping-cart me-2 text-primary"></i> Add to
+                                                            cart
+                                                        </button>
+                                                    </form>
+                                                    <a href="{{ route('shop_detail', $product->id) }}"
                                                         class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
+                                                            class="fa fa-eye me-2 text-primary"></i>View Details</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
-                    <div id="tab-2" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-12">
+
+                        @foreach ($categories as $category)
+                            <div id="tab-{{ $category->id }}" class="tab-pane fade show p-0">
                                 <div class="row g-4">
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
+                                    @foreach ($category->products as $product)
+                                        <div class="col-md-6 col-lg-4 col-xl-3">
+                                            <div class="rounded position-relative fruite-item">
+                                                <div class="fruite-img">
+                                                    <img src="{{ asset($product->product_image) }}"
+                                                        class="img-fluid w-100 rounded-top"
+                                                        alt="{{ $product->product_name }}">
                                                 </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
+                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                    style="top: 10px; left: 10px;">{{ $product->product_name }}</div>
+                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    <div class="d-flex justify-content-between">
+                                                        <h4>{{ $product->product_name }}</h4>
+                                                        <p class="text-dark fs-5 fw-bold mb-1">
+                                                            ${{ $product->product_price }}</p>
+                                                    </div>
+                                                    <p class="">{!! Str::limit($product->product_description, 50) !!}
+                                                    </p>
 
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
+                                                    <div class="d-block flex-lg-wrap mt-3">
+                                                        <form action="{{ route('add_to_cart', $product->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            {{-- <input type="hidden" name="user_id"
+                                                                value="{{ Auth::user()->id }}"> --}}
+                                                            <input type="hidden" name="product_id"
+                                                                value="{{ $product->id }}">
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button type="submit"
+                                                                class="btn border border-secondary rounded px-3 text-primary mb-3">
+                                                                <i class="fa fa-shopping-cart me-2 text-primary"></i> Add
+                                                                to
+                                                                cart
+                                                            </button>
+                                                        </form>
+                                                        <a href="{{ route('shop_detail', $product->id) }}"
+                                                            class="btn border border-secondary rounded px-3 text-primary"><i
+                                                                class="fa fa-eye me-2 text-primary"></i>View Details</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
-                    <div id="tab-3" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-12">
-                                <div class="row g-4">
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
 
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-4" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-12">
-                                <div class="row g-4">
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-5" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-12">
-                                <div class="row g-4">
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Lorem</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <div class="d-flex justify-content-between">
-                                                    <h4>Lorem</h4>
-                                                    <p class="text-dark fs-5 fw-bold mb-1">$4.99 / kg</p>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te
-                                                    incididunt</p>
-
-                                                <div class="d-block  flex-lg-wrap">
-                                                    <a href="{{ route('cart') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary mb-3"><i
-                                                            class="fa fa-shopping-cart me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                    <a href="{{ route('shop_detail') }}"
-                                                        class="btn border border-secondary rounded px-3 text-primary"><i
-                                                            class="fa fa-eye me-2 text-primary"></i>View
-                                                        Details</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Lorem Shop End-->
-    <div class="container-fluid vesitable ">
-        <div class="container ">
-            <h1 class="mb-0">Just for you</h1>
-            <div class="owl-carousel vegetable-carousel justify-content-center">
-                <div class="border border-primary rounded position-relative vesitable-item ">
-                    <div class="vesitable-img">
-                        <img src="/img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-
-                        <div class="d-flex justify-content-between">
-                            <h4>Bell Papper</h4>
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-block text-center">
-
-                            <a href="{{ route('cart') }}"
-                                class="btn border border-secondary rounded mb-3 text-primary"><i
-                                    class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                            <a href="{{ route('shop_detail') }}"
-                                class="btn border border-secondary rounded text-primary"><i
-                                    class="fa fa-eye me-2 text-primary"></i>View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item ">
-                    <div class="vesitable-img">
-                        <img src="/img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-
-                        <div class="d-flex justify-content-between">
-                            <h4>Bell Papper</h4>
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-block text-center">
-
-                            <a href="{{ route('cart') }}"
-                                class="btn border border-secondary rounded mb-3 text-primary"><i
-                                    class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                            <a href="{{ route('shop_detail') }}"
-                                class="btn border border-secondary rounded text-primary"><i
-                                    class="fa fa-eye me-2 text-primary"></i>View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item ">
-                    <div class="vesitable-img">
-                        <img src="/img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-
-                        <div class="d-flex justify-content-between">
-                            <h4>Bell Papper</h4>
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-block text-center">
-
-                            <a href="{{ route('cart') }}"
-                                class="btn border border-secondary rounded mb-3 text-primary"><i
-                                    class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                            <a href="{{ route('shop_detail') }}"
-                                class="btn border border-secondary rounded text-primary"><i
-                                    class="fa fa-eye me-2 text-primary"></i>View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item ">
-                    <div class="vesitable-img">
-                        <img src="/img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-
-                        <div class="d-flex justify-content-between">
-                            <h4>Bell Papper</h4>
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-block text-center">
-
-                            <a href="{{ route('cart') }}"
-                                class="btn border border-secondary rounded mb-3 text-primary"><i
-                                    class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                            <a href="{{ route('shop_detail') }}"
-                                class="btn border border-secondary rounded text-primary"><i
-                                    class="fa fa-eye me-2 text-primary"></i>View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border border-primary rounded position-relative vesitable-item ">
-                    <div class="vesitable-img">
-                        <img src="/img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                    </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">Vegetable</div>
-                    <div class="p-4 rounded-bottom">
-
-                        <div class="d-flex justify-content-between">
-                            <h4>Bell Papper</h4>
-                            <p class="text-dark fs-5 fw-bold mb-0">$7.99 / kg</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                        <div class="d-block text-center">
-
-                            <a href="{{ route('cart') }}"
-                                class="btn border border-secondary rounded mb-3 text-primary"><i
-                                    class="fa fa-shopping-cart me-2 text-primary"></i> Add to cart</a>
-                            <a href="{{ route('shop_detail') }}"
-                                class="btn border border-secondary rounded text-primary"><i
-                                    class="fa fa-eye me-2 text-primary"></i>View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Vesitable Shop End -->
-@endsection
+    @endsection

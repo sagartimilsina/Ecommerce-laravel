@@ -18,8 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->integer('quantity');
-            $table->string('order_status');
+            $table->enum('order_status', ['pending', 'delivered', 'cancelled']);
             $table->date('date');
+           
             $table->timestamps();
         });
     }

@@ -8,7 +8,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session as FacadesSession;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,7 +31,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        
         if (Auth::check()) {
             if (Auth::user()->role === 'admin') {
                 notify()->success('Welcome Admin, You are logged in successfully');

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->string('district')->nullable();
             $table->string('city')->nullable();
-            $table->string('state')->nullable();
+            $table->string('postal_code')->nullable();
             $table->string('address')->nullable();
             $table->string('area')->nullable();
             $table->timestamps();

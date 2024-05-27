@@ -1,4 +1,7 @@
   <!-- Footer Start -->
+  <div class="notify">
+      @include('notify::components.notify')
+  </div>
   <div class="container-fluid bg-dark text-white-50 footer pb-3 mt-5">
       <div class="container ">
           <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
@@ -31,12 +34,17 @@
                       {{-- <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a> --}}
                   </div>
               </div>
-              
+
               <div class="col-lg-4 col-md-6">
                   <div class="d-flex flex-column text-start footer-item">
                       <h4 class="text-light mb-3">Account</h4>
                       <a class="btn-link" href="{{ route('user_profile.edit') }}">My Account</a>
-                      <a class="btn-link" href="{{ route('cart') }}">Shopping Cart</a>
+                      @auth
+                          <a class="btn-link" href="{{ route('cart', Auth::user()->id) }}">Shopping Cart</a>
+                      @else
+                          <a class="btn-link" href="{{ route('guest_cart') }}">Shopping Cart</a>
+                      @endauth
+
                       <a class="btn-link" href="{{ route('user_orders_lists') }}">Order History</a>
                   </div>
               </div>
@@ -65,13 +73,13 @@
   @notifyJs
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/waypoints/waypoints.min.js"></script>
-  <script src="lib/lightbox/js/lightbox.min.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="/lib/easing/easing.min.js"></script>
+  <script src="/lib/waypoints/waypoints.min.js"></script>
+  <script src="/lib/lightbox/js/lightbox.min.js"></script>
+  <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
 
   <!-- Template Javascript -->
-  <script src="js/main.js"></script>
+  <script src="/js/main.js"></script>
   </body>
 
   </html>
