@@ -18,7 +18,7 @@
         }
     </style>
     <main>
-      
+
         <div class="container">
             <nav class="breadcrumb">
                 <a class="breadcrumb-item" href="{{ route('index') }}">Home</a>
@@ -52,10 +52,12 @@
                     <thead class="table-dark">
 
                         <tr>
-                           
+
                             <th>Order No</th>
                             <th>Date</th>
                             <th>Items Image</th>
+                            <th>Quantity</th>
+                            <th>Product Price</th>
                             <th>Total Amount</th>
                             <th>Order Status</th>
                             <th>Payment Status</th>
@@ -70,7 +72,9 @@
                                     <img src="{{ asset($item->product->product_image) }}" alt="" width="50"
                                         height="50">
                                 </td>
-                                <td> NPR{{ $item->product->product_price}}</td>
+                                <td>{{ $item->order->quantity }}</td>
+                                <td>NPR{{ $item->product->product_price }}</td>
+                                <td> NPR{{ $item->product->product_price * $item->order->quantity }}</td>
                                 <td>
                                     @if ($item->order->order_status == 'Delivered')
                                         <p class="badge bg-info p-3">{{ $item->order->order_status }}</p>
@@ -87,7 +91,7 @@
                                         <p class="badge bg-danger p-3">{{ $item->payment_status }}</p>
                                     @endif
                                 </td>
-                               
+
                             </tr>
                         @endforeach
 
@@ -100,10 +104,6 @@
             </div>
         </div>
 
-        </div>
 
-        </div>
-
-        </div>
     </main>
 @endsection

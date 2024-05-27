@@ -13,8 +13,10 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         $categories = Category::all();
+
+
 
         return view('frontend.index', compact('products', 'categories'));
     }
@@ -87,8 +89,9 @@ class FrontendController extends Controller
 
         return view('frontend.404');
     }
-    public function  order_lists(){
-                
+    public function  order_lists()
+    {
+
         return view('frontend.orders_lists');
     }
 }

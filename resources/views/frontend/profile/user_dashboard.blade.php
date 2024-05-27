@@ -25,8 +25,8 @@
                     <div class="card shadow m-2">
                         <h5 class="card-title card-header">Personal Profile</h5>
                         <div class="card-body ">
-                            <img   src="{{asset('uploads/profile/'.Auth::user()->profile_photo_path)}}" alt="" width="100"
-                                height="100">
+                            <img src="{{ asset('uploads/profile/' . Auth::user()->profile_photo_path) }}" alt=""
+                                width="100" height="100">
                             <p class="card-text mt-2 mb-1">{{ @Auth::user()->name }}</p>
                             <p class="card-text mb-1">{{ @Auth::user()->email }}</p>
                             <p class="card-text mb-1">(+977) {{ @Auth::user()->phone }}</p>
@@ -41,30 +41,35 @@
                         <div class="row justify-content-between">
                             <div class="card-body  col-lg-4 col-12 p-4 col-md-6">
                                 <p class="card-text text-muted mb-2">Permanent Address</p>
-                                <h6 class="card-subtitle mb-2 ">{{@Auth::user()->name}}</h6>
-                                <p class="card-text">{{@Auth::user()->permanent_address->address}}</p>
-                                <p class="card-text"> {{@Auth::user()->permanent_address->province}} - {{@Auth::user()->permanent_address->city}} - {{@Auth::user()->permanent_address->area}} </p>
-                                <p class="card-text">(+977) {{@Auth::user()->phone}}</p>
+                                <h6 class="card-subtitle mb-2 ">{{ @Auth::user()->name }}</h6>
+                                <p class="card-text">{{ @Auth::user()->permanent_address->address }}</p>
+                                <p class="card-text"> {{ @Auth::user()->permanent_address->province }} -
+                                    {{ @Auth::user()->permanent_address->city }} -
+                                    {{ @Auth::user()->permanent_address->area }} </p>
+                                <p class="card-text">(+977) {{ @Auth::user()->phone }}</p>
                                 {{-- <a href="{{ route('address_update') }}"
                                     class="btn btn-primary  border border-secondary rounded mt-2">Edit
                                     Permanent Address</a> --}}
                             </div>
                             <div class="card-body col-lg-4 col-12 p-4 col-md-6">
                                 <p class="card-text text-muted mb-2">Temporary Address</p>
-                                <h6 class="card-subtitle mb-2 ">{{@Auth::user()->name}}</h6>
-                                <p class="card-text">{{@Auth::user()->temporary_address->address}}</p>
-                                <p class="card-text"> {{@Auth::user()->temporary_address->province}} - {{@Auth::user()->temporary_address->city}} - {{@Auth::user()->temporary_address->area}}</p>
-                                <p class="card-text">(+977) {{@Auth::user()->phone}}</p>
+                                <h6 class="card-subtitle mb-2 ">{{ @Auth::user()->name }}</h6>
+                                <p class="card-text">{{ @Auth::user()->temporary_address->address }}</p>
+                                <p class="card-text"> {{ @Auth::user()->temporary_address->province }} -
+                                    {{ @Auth::user()->temporary_address->city }} -
+                                    {{ @Auth::user()->temporary_address->area }}</p>
+                                <p class="card-text">(+977) {{ @Auth::user()->phone }}</p>
                                 {{-- <a href="{{ route('address_update') }}"
                                     class="btn btn-primary  border border-secondary rounded mt-2">Edit Temporary
                                     Address</a> --}}
                             </div>
                             <div class="card-body col-lg-4 col-12 p-4 col-md-6">
                                 <p class="card-text text-muted mb-2">Delivery Address</p>
-                                <h6 class="card-subtitle mb-2 ">{{@Auth::user()->name}}</h6>
-                                <p class="card-text">{{@Auth::user()->delivery_address->address}}</p>
-                                <p class="card-text"> {{@Auth::user()->delivery_address->province}} - {{@Auth::user()->delivery_address->city}} - {{@Auth::user()->delivery_address->area}} </p>
-                                <p class="card-text">(+977) {{@Auth::user()->phone}}</p>
+                                <h6 class="card-subtitle mb-2 ">{{ @Auth::user()->name }}</h6>
+                                <p class="card-text">{{ @Auth::user()->delivery->address }}</p>
+                                <p class="card-text"> {{ @Auth::user()->delivery->province }} -
+                                    {{ @Auth::user()->delivery->city }} - {{ @Auth::user()->delivery->area }} </p>
+                                <p class="card-text">(+977) {{ @Auth::user()->phone }}</p>
                                 {{-- <a href="{{ route('address_update') }}"
                                     class="btn btn-primary  border border-secondary rounded mt-2">Edit Temporary
                                     Address</a> --}}

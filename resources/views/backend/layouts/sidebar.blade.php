@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="{{ route('admin_dashboard') }}" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2 text-capitalize">E-Site</span>
         </a>
 
@@ -43,7 +43,8 @@
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Manage Orders</div>
             </a>
-            <ul class="menu-sub">
+            <ul class="menu-sub"
+                style="display: {{ request()->routeIs('pending_order*') || request()->routeIs('delivered_order*') || request()->routeIs('cancel_order*') ? 'block' : 'none' }};">
                 <li class="menu-item {{ request()->routeIs('pending_order*') ? 'active' : '' }}">
                     <a href="{{ route('pending_order') }}" class="menu-link">
                         <div data-i18n="Without menu">Pending Order Lists</div>
@@ -61,49 +62,42 @@
                 </li>
             </ul>
         </li>
-
     </ul>
 </aside>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Get all menu items and their associated submenus
         const menuItems = document.querySelectorAll(".menu-item");
         const menuSubs = document.querySelectorAll(".menu-sub");
 
-        // Add click event listeners to each menu item
         menuItems.forEach(function(menuItem, index) {
-            menuItem.addEventListener("click", function() {
-                // Toggle the display of the associated submenu
-                if (menuItem.classList.contains("active")) {
-                    menuSubs[index].style.display = "none"; //hide menu subs
-                    menuItem.classList.remove("active"); // remove active request
+            menuItem.addEventListener("click", function(event) {
+                event.stopPropagation();
+                const submenu = menuItem.querySelector(".menu-sub");
 
+                if (submenu) {
+                    if (menuItem.classList.contains("active")) {
+                        submenu.style.display = "none";
+                        menuItem.classList.remove("active");
+                    } else {
+                        menuSubs.forEach(sub => sub.style.display = "none");
+                        menuItems.forEach(item => item.classList.remove("active"));
+
+                        submenu.style.display = "block";
+                        menuItem.classList.add("active");
+                    }
                 } else {
-                    menuSubs[index].style.display = "none"; //hide menu subs
-                    // menuItem[index].style.display ="block";
-                    menuItem.classList.add("active"); // add active request
+                    menuItems.forEach(item => item.classList.remove("active"));
+                    menuItem.classList.add("active");
                 }
+            });
+        });
 
-                menuItems.forEach(function(menuItem, index) {
-                    menuItem.addEventListener("click", function(event) {
-                        event
-                            .stopPropagation(); // Prevent click event from bubbling up
-
-                        // Check if the clicked menu item has a submenu
-                        if (menuSubs[index]) {
-                            toggleActiveAndSubmenu(index);
-                        } else {
-                            // If there's no submenu, find the closest parent with a submenu
-                            let parentItem = menuItem.closest(".menu-item");
-                            while (parentItem) {
-                                let parentIndex = Array.from(menuItems).indexOf(
-                                    parentItem);
-                                toggleActiveAndSubmenu(parentIndex);
-                                parentItem = parentItem.closest(".menu-item");
-                            }
-                        }
-                    });
-                });
+        document.querySelectorAll(".menu-sub .menu-item").forEach(function(subItem) {
+            subItem.addEventListener("click", function(event) {
+                event.stopPropagation();
+                document.querySelectorAll(".menu-sub .menu-item").forEach(item => item.classList
+                    .remove("active"));
+                subItem.classList.add("active");
             });
         });
     });

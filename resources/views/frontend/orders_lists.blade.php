@@ -56,10 +56,12 @@
                             <thead class="table-dark">
 
                                 <tr>
-                                    <th>SN</th>
+                                   
                                     <th>Order No</th>
                                     <th>Date</th>
                                     <th>Items Image</th>
+                                    <th>Quantity</th>
+                                    <th>Product Price</th>
                                     <th>Total Amount</th>
                                     <th>Order Status</th>
                                     <th>Payment Status</th>
@@ -69,13 +71,19 @@
                             <tbody class="table-group-divider">
                                 @foreach ($allOrders as $order)
                                     <tr class="table-primary">
-                                        <td scope="row">{{ $loop->iteration }}</td>
+                                       
                                         <td>{{ $order->order->id }}</td>
                                         <td>{{ $order->order->date }}</td>
                                         <td><img src="{{ asset($order->product->product_image) }}" alt=""
                                                 width="50" height="50">
                                         </td>
-                                        <td>{{ $order->product->product_price }}</td>
+                                        <td>{{ $order->order->quantity }}</td>
+                                        <td>{{$order->product->product_price }}</td>
+                                        @if ($order->payment_staus == 'Verified')
+                                            <td>{{ $order->payment_amount }}</td>
+                                        @else
+                                            <td>{{ $order->product->product_price * $order->order->quantity }}</td>
+                                        @endif
                                         <td>
                                             @if (@$order->order->order_status == 'Delivered')
                                                 <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>
@@ -110,10 +118,12 @@
                             <thead class="table-dark">
 
                                 <tr>
-                                    <th>SN</th>
+                                   
                                     <th>Order No</th>
                                     <th>Date</th>
                                     <th>Items</th>
+                                    <th>Quantity</th>
+                                    <th>Product Price</th>
                                     <th>Total Amount</th>
                                     <th>Order Status</th>
                                     <th>Payment Status</th>
@@ -123,13 +133,19 @@
                             <tbody class="table-group-divider">
                                 @foreach ($unpaidOrders as $order)
                                     <tr class="table-primary">
-                                        <td scope="row">{{ $loop->iteration }}</td>
+                                       
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->order->date }}</td>
                                         <td><img src="{{ asset($order->product->product_image) }}" alt=""
                                                 width="50" height="50">
                                         </td>
-                                        <td>{{ $order->product->product_price }}</td>
+                                        <td>{{ $order->order->quantity }}</td>
+                                        <td>{{$order->product->product_price }}</td>
+                                        @if ($order->payment_staus == 'Verified')
+                                            <td>{{ $order->payment_amount }}</td>
+                                        @else
+                                            <td>{{ $order->product->product_price * $order->order->quantity }}</td>
+                                        @endif
                                         <td>
                                             @if (@$order->order->order_status == 'delivered')
                                                 <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>
@@ -163,10 +179,12 @@
                             <thead class="table-dark">
 
                                 <tr>
-                                    <th>SN</th>
+                                   
                                     <th>Order No</th>
                                     <th>Date</th>
                                     <th>Items</th>
+                                    <th>Quantity</th>
+                                    <th>Product Price</th>
                                     <th>Total Amount</th>
                                     <th>Order Status</th>
                                     <th>Payment Status</th>
@@ -176,13 +194,19 @@
                             <tbody class="table-group-divider">
                                 @foreach ($paidOrders as $order)
                                     <tr class="table-primary">
-                                        <td scope="row">{{ $loop->iteration }}</td>
+                                       
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->order->date }}</td>
                                         <td><img src="{{ asset($order->product->product_image) }}" alt=""
                                                 width="50" height="50">
                                         </td>
-                                        <td>{{ $order->product->product_price }}</td>
+                                        <td>{{ $order->order->quantity }}</td>
+                                        <td>{{$order->product->product_price }}</td>
+                                        @if ($order->payment_staus == 'Verified')
+                                            <td>{{ $order->payment_amount }}</td>
+                                        @else
+                                            <td>{{ $order->product->product_price * $order->order->quantity }}</td>
+                                        @endif
                                         <td>
                                             @if (@$order->order->order_status == 'Delivered')
                                                 <p class="badge bg-info p-3">{{ $order->order->order_status }}</p>

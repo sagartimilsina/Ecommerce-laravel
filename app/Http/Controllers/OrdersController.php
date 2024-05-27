@@ -40,7 +40,9 @@ class OrdersController extends Controller
             ->where('user_id', $id)
             ->where('order_status', 'pending')
             ->paginate(20);
-        return view('backend.orders.main', ['pending_orders' => $pending_order]);
+
+        $user = User::find($id);
+        return view('backend.orders.main', ['pending_orders' => $pending_order, 'user' => $user]);
     }
 
     public function update_order_status(Request $request, $id)
@@ -79,8 +81,8 @@ class OrdersController extends Controller
             ->where('user_id', $id)
             ->where('order_status', 'delivered')
             ->paginate(20);
-
-        return view('backend.orders.delivered', compact('delivered_orders'));
+        $user = User::find($id);
+        return view('backend.orders.delivered', compact('delivered_orders', 'user'));
     }
 
     public function show_all_users_cancelled_orders($id)
@@ -89,8 +91,9 @@ class OrdersController extends Controller
             ->where('user_id', $id)
             ->where('order_status', 'cancelled')
             ->paginate(20);
+        $user = User::find($id);
 
-        return view('backend.orders.cancel', compact('cancelled_orders'));
+        return view('backend.orders.cancel', compact('cancelled_orders', 'user'));
     }
 
     public function cancel_order()

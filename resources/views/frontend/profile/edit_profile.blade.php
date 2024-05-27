@@ -27,10 +27,10 @@
                         @csrf
                         @method('put')
                         <div class="row">
-                            <div class="form-group col-lg-4 col-sm-12">
+                            <div class="form-group col-lg-6 col-sm-12">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" id="name" class="form-control"
-                                    value="{{ Auth::user()->name }}" >
+                                    value="{{ Auth::user()->name }}">
                                 <div class="text-danger p-2">{{ $errors->first('name') }}</div>
                             </div>
                             {{-- <div class="form-group col-lg-4 col-sm-12">
@@ -53,7 +53,7 @@
                             </div> --}}
 
                             @if (Auth::user()->email !== null)
-                                <div class="form-group col-lg-4 col-sm-12">
+                                <div class="form-group col-lg-6 col-sm-12">
                                     <label for="dob">Phone</label>
                                     <input type="number" name="phone" id="phone" class="form-control"
                                         value="{{ Auth::user()->phone }}" placeholder="Enter Your Phone">
@@ -78,39 +78,39 @@
 
                                 <div class="img m-1 mb-2">
                                     <img id="profile-preview"
-                                        src="{{asset('uploads/profile/'.Auth::user()->profile_photo_path)}}"
+                                        src="{{ asset('uploads/profile/' . Auth::user()->profile_photo_path) }}"
                                         alt="Profile Image" width="100" height="100" class="img-fluid rounded">
                                 </div>
                             </div>
-
-                            <script>
-                                // Function to update profile image preview
-                                function updateProfilePreview(input) {
-                                    if (input.files && input.files[0]) {
-                                        var reader = new FileReader();
-                                        reader.onload = function(e) {
-                                            $('#profile-preview').attr('src', e.target.result);
-                                        }
-                                        reader.readAsDataURL(input.files[0]); // Convert image to data URL
-                                    }
-                                }
-
-                                // Event listener for file input change
-                                $('#profile').change(function() {
-                                    updateProfilePreview(this);
-                                });
-                            </script>
-
+                            <input type="hidden" name="old_profile" value="{{ Auth::user()->profile_photo_path }}">
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary   rounded mt-2">Update</button>
-                        </div>
-                    </form>
                 </div>
+                <div class="form-group m-2">
+                    <button type="submit" class="btn btn-primary   rounded mt-2">Update</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
-    </div>
 
-    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Script to update profile image preview -->
+    <script>
+        // Function to update profile image preview
+        function updateProfilePreview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#profile-preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // Convert image to data URL
+            }
+        }
+
+        // Event listener for file input change
+        $('#profile').change(function() {
+            updateProfilePreview(this);
+        });
+    </script>
 @endsection

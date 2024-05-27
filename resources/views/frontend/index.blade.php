@@ -48,7 +48,7 @@
                     <div class="col-lg-10 text-end">
                         <ul class="nav nav-pills d-inline-flex text-center mb-5">
                             <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded active" data-bs-toggle="pill" href="#tab-1">
+                                <a class="d-flex m-2 py-2 bg-light rounded active" data-bs-toggle="pill" href="#tab-0">
                                     <span class="text-dark w-100 px-3 pt-1 pb-1 text-nowrap">All Products</span>
                                 </a>
                             </li>
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="tab-content">
-                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div id="tab-0" class="tab-pane fade show active p-0">
                             <div class="row g-4">
                                 @foreach ($products as $product)
                                     <div class="col-md-6 col-lg-4 col-xl-3">
@@ -83,11 +83,9 @@
                                                     </p>
                                                 </div>
                                                 <p class="">{!! Str::limit($product->product_description, 50) !!}</p>
-
                                                 <div class="d-block flex-lg-wrap mt-3">
                                                     <form action="{{ route('add_to_cart', $product->id) }}" method="POST">
                                                         @csrf
-                                                        {{-- <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"> --}}
                                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                         <input type="hidden" name="quantity" value="1">
                                                         <button type="submit"
@@ -106,9 +104,10 @@
                                 @endforeach
                             </div>
                         </div>
+                        
 
                         @foreach ($categories as $category)
-                            <div id="tab-{{ $category->id }}" class="tab-pane fade show p-0">
+                            <div id="tab-{{ $category->id }}" class="tab-pane fade p-0">
                                 <div class="row g-4">
                                     @foreach ($category->products as $product)
                                         <div class="col-md-6 col-lg-4 col-xl-3">
@@ -126,23 +125,18 @@
                                                         <p class="text-dark fs-5 fw-bold mb-1">
                                                             ${{ $product->product_price }}</p>
                                                     </div>
-                                                    <p class="">{!! Str::limit($product->product_description, 50) !!}
-                                                    </p>
-
+                                                    <p class="">{!! Str::limit($product->product_description, 50) !!}</p>
                                                     <div class="d-block flex-lg-wrap mt-3">
                                                         <form action="{{ route('add_to_cart', $product->id) }}"
                                                             method="POST">
                                                             @csrf
-                                                            {{-- <input type="hidden" name="user_id"
-                                                                value="{{ Auth::user()->id }}"> --}}
                                                             <input type="hidden" name="product_id"
                                                                 value="{{ $product->id }}">
                                                             <input type="hidden" name="quantity" value="1">
                                                             <button type="submit"
                                                                 class="btn border border-secondary rounded px-3 text-primary mb-3">
                                                                 <i class="fa fa-shopping-cart me-2 text-primary"></i> Add
-                                                                to
-                                                                cart
+                                                                to cart
                                                             </button>
                                                         </form>
                                                         <a href="{{ route('shop_detail', $product->id) }}"
@@ -157,6 +151,7 @@
                             </div>
                         @endforeach
                     </div>
+
 
                 </div>
             </div>

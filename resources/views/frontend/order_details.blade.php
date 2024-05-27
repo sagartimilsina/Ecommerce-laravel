@@ -78,7 +78,7 @@
 
                         <div class="d-flex justify-content-between">
                             <p class="card-text">Subtotal</p>
-                            <p class="card-text">{{ $orders->product->product_price }}</p>
+                            <p class="card-text">{{ $orders->product->product_price * $orders->order->quantity }}</p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <p class="card-text">Delivery Charge</p>
@@ -94,19 +94,23 @@
                             <div class="d-flex justify-content-between">
                                 <p class="card-text">Total</p>
                                 <p class="card-text">NPR
-                                    {{ $orders->product->product_price + $orders->product->product_delivery_charge - $orders->product->discount }}
+                                    {{ ($orders->product->product_price + $orders->delivery_charge - $orders->discount) * $orders->order->quantity }}
                                 </p>
+                                
                             </div>
                         @else
                             <div class="d-flex justify-content-between">
                                 <p class="card-text">Total</p>
                                 <p class="card-text">NPR
-                                    {{ $orders->product->product_price + $orders->delivery_charge - $orders->discount }}</p>
+                                    {{ ($orders->product->product_price + $orders->delivery_charge - $orders->discount) * $orders->order->quantity }}
+                                </p>
                             </div>
                         @endif
 
 
-                        <h5 class="mb-2 mt-2 ">Payment Method: <p class=" p-2 badge bg-success">{{ $orders->payment_method }}</p></h5>
+                        <h5 class="mb-2 mt-2 ">Payment Method: <p class=" p-2 badge bg-success">
+                                {{ $orders->payment_method }}</p>
+                        </h5>
                         @if (@$orders->payment_status !== 'Verified')
                             <form action="{{ route('esewa_payment') }}" method="post">
                                 @csrf
@@ -124,8 +128,8 @@
                                 <input type="hidden" name="district" id="" value="{{ $delivery_address->area }}">
                                 <input type="hidden" name="area" id="" value="{{ $delivery_address->area }}">
                                 <input type="hidden" name="total_amount" id=""
-                                    value="{{ $orders->product->product_price + $orders->product->product_delivery_charge - $orders->product->discount }}">
-                                <input type="hidden" name="order_id" id="" value="{{ $orders->order_id}}">
+                                    value="{{ ($orders->product->product_price + $orders->product->product_delivery_charge - $orders->product->discount)*$orders->order->quantity }}">
+                                <input type="hidden" name="order_id" id="" value="{{ $orders->order_id }}">
                                 <input type ="hidden" name="product_id[]" id=""
                                     value="{{ $orders->product->id }}">
                                 <input type="hidden" name="payment_method" id="" value="Esewa">

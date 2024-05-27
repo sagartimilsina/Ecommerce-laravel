@@ -79,6 +79,7 @@ Route::prefix('/')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/user-orders_store', [OrdersController::class, 'user_orders_store'])->name('user_orders_store');
     Route::get('/orders-payement', [OrdersController::class, 'orders_payement'])->name('orders_payement');
     Route::get('/account-details', [UsersController::class, 'account_details'])->name('account_details');
+    Route::put('/user_crendentials.update/{id}', [UsersController::class, 'user_credentials_update'])->name('user_credentials_update');
     Route::get('/address', [UsersController::class, 'address_update'])->name('address_update');
     Route::put('/user-profile', [UsersController::class, 'update'])->name('user_profile.update');
     Route::delete('/user-profile', [UsersController::class, 'destroy_profile'])->name('user_profile.destroy');

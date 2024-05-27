@@ -35,6 +35,8 @@
                             <th>Order No</th>
                             <th>Date</th>
                             <th>Items Image</th>
+                            <th>Quantity</th>
+                            <th>Product Price</th>
                             <th>Total Amount</th>
                             <th>Order Status</th>
                             <th>Payment Status</th>
@@ -47,9 +49,12 @@
                                 <td>{{ $item->order->id }}</td>
                                 <td>{{ $item->order->date }}</td>
                                 <td>
-                                    <img src="{{ asset($item->product->product_image) }}" alt="" width="50" height="50">
+                                    <img src="{{ asset($item->product->product_image) }}" alt="" width="50"
+                                        height="50">
                                 </td>
+                                <td>{{ $item->order->quantity }}</td>
                                 <td>NPR {{ $item->product->product_price }}</td>
+                                <td>NPR {{ $item->product->product_price * $item->order->quantity }}</td>
                                 <td>
                                     @if ($item->order->order_status == 'Delivered')
                                         <p class="badge bg-info p-3">{{ $item->order->order_status }}</p>
@@ -68,24 +73,32 @@
                                 </td>
                                 <td>
                                     @php
-                                        $delivery_address = DeliveryAddress::where('user_id', Auth::user()->id)->first();
+                                        $delivery_address = DeliveryAddress::where(
+                                            'user_id',
+                                            Auth::user()->id,
+                                        )->first();
                                     @endphp
                                     @if (@$item->payment_status !== 'Verified')
                                         <form action="{{ route('esewa_payment') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $item->id }}">
-                                            <input type="hidden" name="phone" value="{{ $delivery_address->user->phone }}">
+                                            <input type="hidden" name="phone"
+                                                value="{{ $delivery_address->user->phone }}">
                                             <input type="hidden" name="address" value="{{ $delivery_address->address }}">
                                             <input type="hidden" name="city" value="{{ $delivery_address->city }}">
-                                            <input type="hidden" name="province" value="{{ $delivery_address->province }}">
+                                            <input type="hidden" name="province"
+                                                value="{{ $delivery_address->province }}">
                                             <input type="hidden" name="country" value="{{ $delivery_address->country }}">
-                                            <input type="hidden" name="district" value="{{ $delivery_address->district }}">
+                                            <input type="hidden" name="district"
+                                                value="{{ $delivery_address->district }}">
                                             <input type="hidden" name="area" value="{{ $delivery_address->area }}">
-                                            <input type="hidden" name="total_amount" value="{{ $item->product->product_price + $item->product->product_delivery_charge - $item->product->discount }}">
+                                            <input type="hidden" name="total_amount"
+                                                value="{{ ($item->product->product_price + $item->product->product_delivery_charge - $item->product->discount) * $item->order->quantity }}">
                                             <input type="hidden" name="order_id" value="{{ $item->order->id }}">
                                             <input type="hidden" name="product_id[]" value="{{ $item->product->id }}">
                                             <input type="hidden" name="payment_method" value="Esewa">
-                                            <button type="submit" class="btn btn-primary bg-primary rounded mt-2">Pay Now</button>
+                                            <button type="submit" class="btn btn-primary bg-primary rounded mt-2">Pay
+                                                Now</button>
                                         </form>
                                     @endif
                                 </td>

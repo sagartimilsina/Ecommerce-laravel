@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -39,6 +40,39 @@ class UsersController extends Controller
         return view('frontend.profile.address', compact('user', 'editpermanentaddress', 'edittemporaryaddress', 'editdeliveryaddress'));
     }
 
+
+    public function user_credentials_update(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string|max:255',
+            'current_password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail(auth()->user()->id);
+
+        // Check if the current password matches the user's password
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Current password does not match']);
+        }
+
+        // Update user credentials
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = Hash::make($request->password); // Hash the new password
+
+        // Save the updated user data
+        $user->save();
+
+        // Set success notification
+        notify()->success('User credentials updated successfully');
+        return redirect()->back();
+    }
+
     public function account_details()
     {
         $user = User::find(auth()->user()->id);
@@ -60,6 +94,7 @@ class UsersController extends Controller
 
         $paidOrders = Payments::with('order', 'product')->where('user_id', auth()->user()->id)->where('payment_status', 'Verified')->paginate(10);
         $unpaidOrders = Payments::with('order', 'product')->where('user_id', auth()->user()->id)->where('payment_status', 'Failed')->paginate(10);
+    
 
 
         return view('frontend.orders_lists', compact('allOrders', 'paidOrders', 'unpaidOrders'));
@@ -111,6 +146,7 @@ class UsersController extends Controller
             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Assuming profile is an image upload
         ]);
 
+        $old_photo = $request->old_profile;
         // Find the user by ID
         $user = User::findOrFail($request->id);
 
@@ -124,6 +160,8 @@ class UsersController extends Controller
             $photo_name = time() . '.' . $request->file('profile')->getClientOriginalExtension();
             // Move the uploaded image to the specified path
             $request->file('profile')->move(public_path('uploads/profile/'), $photo_name);
+        } else {
+            $photo_name = $old_photo;
         }
 
         // Save the updated user
