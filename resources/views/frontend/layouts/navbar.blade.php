@@ -39,19 +39,28 @@
                 @endauth
 
                 @auth
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link " data-bs-toggle="dropdown"> <i class="fas fa-user fa-2x"></i></a>
+                    @if (Auth::user()->role == 'user')
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link " data-bs-toggle="dropdown"> <i
+                                    class="fas fa-user fa-2x"></i></a>
 
-                        <div class="dropdown-menu m-0  bg-secondary rounded-0">
-                            <a class="dropdown-item" href="{{ route('user_dashboard') }}">My Profile</a>
+                            <div class="dropdown-menu m-0  bg-secondary rounded-0">
+                                <a class="dropdown-item" href="{{ route('user_dashboard') }}">My Profile</a>
 
 
-                            <a class="dropdown-item" href="{{ route('user_orders_lists') }}">My Order</a>
-                            <form action="{{ route('logout') }}" method="POST">@csrf <input type="submit"
-                                    class="dropdown-item" value="Logout"></form>
-                            {{-- <a class="dropdown-item" href="{{route('logout')}}">Logout</a> --}}
+                                <a class="dropdown-item" href="{{ route('user_orders_lists') }}">My Order</a>
+                                <form action="{{ route('logout') }}" method="POST">@csrf <input type="submit"
+                                        class="dropdown-item" value="Logout"></form>
+                                {{-- <a class="dropdown-item" href="{{route('logout')}}">Logout</a> --}}
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link " data-bs-toggle="dropdown"> <i
+                                    class="fas fa-user fa-2x"></i></a>
+                            <div class="dropdown-menu m-0  bg-secondary rounded-0">
+                                <a class="dropdown-item" href="{{ route('admin_dashboard') }}">Dashboard</a>                
+                    @endif
                 @endauth
 
                 @guest
